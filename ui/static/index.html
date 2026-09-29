@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ODD²F - Deepfake Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="background-elements">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <main class="container">
+        <header>
+            <h1>ODD²F <span>Inspector</span></h1>
+            <p>Optimal Dual-Stream Deepfake Detection Framework</p>
+        </header>
+
+        <section id="progress-section" class="glass-card progress-card hidden">
+            <div class="progress-header">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <h3>Live Training Progress <span id="prog-pct" style="color: var(--text-muted); font-size: 0.9em; margin-left: 10px;">(0%)</span></h3>
+                    <span class="status-indicator" id="train-status-indicator"></span>
+                </div>
+                <div class="control-buttons">
+                    <button id="btn-pause" class="ctrl-btn pause-btn">Pause</button>
+                    <button id="btn-cancel" class="ctrl-btn cancel-btn">Cancel</button>
+                </div>
+            </div>
+            <div class="progress-stats">
+                <div class="stat">Epoch: <span id="prog-epoch">0/0</span></div>
+                <div class="stat">Batch: <span id="prog-batch">0/0</span></div>
+                <div class="stat">Loss: <span id="prog-loss">0.00</span></div>
+                <div class="stat">Acc: <span id="prog-acc">0.00%</span></div>
+            </div>
+            <div class="progress-bar-container">
+                <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+            </div>
+        </section>
+
+        <section id="upload-section" class="glass-card active">
+            <div id="drop-zone" class="drop-zone">
+                <div class="drop-zone-content">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <h3>Drag & Drop</h3>
+                    <p>or click to browse</p>
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                </div>
+            </div>
+        </section>
+        
+        <section id="global-metrics-section" class="glass-card">
+            <h3 style="text-align: center; margin-bottom: 1.5rem;">CIDFLAKE Model Validation Metrics</h3>
+            <div class="global-metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="gm-acc">0.0%</div>
+                    <div class="metric-label">Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="gm-prec">0.0%</div>
+                    <div class="metric-label">Precision</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="gm-rec">0.0%</div>
+                    <div class="metric-label">Recall</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="gm-f1">0.0%</div>
+                    <div class="metric-label">F1 Score</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="analyzing-section" class="glass-card hidden">
+            <div class="loader-container">
+                <div class="pulse-ring"></div>
+                <div class="loader-text" id="loader-text">Analyzing Pixels...</div>
+            </div>
+        </section>
+
+        <section id="results-section" class="glass-card hidden">
+            <button id="reset-btn" class="back-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Analyze Another
+            </button>
+
+            <div class="result-header">
+                <div class="result-badge" id="result-badge">FAKE</div>
+                <div class="confidence">Confidence: <span id="confidence-score">98.5%</span></div>
+            </div>
+
+            <div class="image-grid">
+                <div class="image-box">
+                    <h4>Original</h4>
+                    <img id="img-original" src="" alt="Original Image">
+                </div>
+                <div class="image-box">
+                    <h4>Error Level Analysis (ELA)</h4>
+                    <img id="img-ela" src="" alt="ELA Compression Map">
+                    <p class="img-desc">Highlights compression inconsistencies</p>
+                </div>
+                <div class="image-box highlight-box">
+                    <h4>AI Spatial Attention Map</h4>
+                    <img id="img-heatmap" src="" alt="CBAM Heatmap">
+                    <p class="img-desc">Red areas indicate regions the AI suspects of forgery</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="analytics-section" class="glass-card hidden" style="margin-top: 2rem;">
+            <div class="charts-grid">
+                <div class="chart-box">
+                    <h4>Forensic Comparison Data</h4>
+                    <p class="img-desc">Uploaded Image vs Authentic Baseline</p>
+                    <div class="custom-bar-chart">
+                        <!-- ELA Density -->
+                        <div class="bar-row">
+                            <div class="bar-label">ELA Density</div>
+                            <div class="bar-track">
+                                <div class="bar-fill uploaded-bar" id="bar-ela"></div>
+                                <div class="bar-baseline" style="left: 15%;"></div>
+                            </div>
+                            <div class="bar-value" id="val-ela">0%</div>
+                        </div>
+                        <!-- Noise Variance -->
+                        <div class="bar-row">
+                            <div class="bar-label">Noise Variance</div>
+                            <div class="bar-track">
+                                <div class="bar-fill uploaded-bar" id="bar-noise"></div>
+                                <div class="bar-baseline" style="left: 50%;"></div>
+                            </div>
+                            <div class="bar-value" id="val-noise">0%</div>
+                        </div>
+                        <!-- Color Variance -->
+                        <div class="bar-row">
+                            <div class="bar-label">Color Variance</div>
+                            <div class="bar-track">
+                                <div class="bar-fill uploaded-bar" id="bar-color"></div>
+                                <div class="bar-baseline" style="left: 60%;"></div>
+                            </div>
+                            <div class="bar-value" id="val-color">0%</div>
+                        </div>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item"><span class="legend-color uploaded-legend"></span> Uploaded Image</div>
+                        <div class="legend-item"><span class="legend-baseline"></span> Authentic Baseline</div>
+                    </div>
+                </div>
+                <div class="chart-box">
+                    <h4>Session History</h4>
+                    <canvas id="historyChart"></canvas>
+                    <p class="img-desc">Fake probability trend across uploaded photos</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+venv/
+env/
+.env
+
+# Large datasets
+archive/
+archive (1)/
+mini_dataset/
+dummy_dataset/
+*.csv
+
+# Model Weights (GitHub has a 100MB file limit)
+checkpoints/
+*.pth
+
+# UI Data & Telemetry
+ui/progress.json
+ui/control.json
+
+# IDE / System
+.vscode/
+.idea/
+.DS_Store

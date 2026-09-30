@@ -27,3 +27,8 @@ ui/control.json
 .vscode/
 .idea/
 .DS_Store
+large_dataset/
+mixed_dataset/
+*.jpg
+*.jpeg
+*.png

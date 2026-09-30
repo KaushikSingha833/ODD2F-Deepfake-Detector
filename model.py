@@ -87,13 +87,13 @@ class ODD2F(nn.Module):
             # Since the output of the encoder is flattened, we don't need AdaptiveAvgPool2d or Flatten here
             nn.Linear(960 * 2, 512),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.3)
+            nn.Dropout(0.5) # Increased from 0.3 to stop overfitting
         )
         
         self.classifier = nn.Sequential(
             nn.Linear(512, 256),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.3),
+            nn.Dropout(0.5), # Increased from 0.3 to stop overfitting
             nn.Linear(256, num_classes),
             # nn.Sigmoid() - Usually handled by CrossEntropyLoss or BCEWithLogitsLoss
         )

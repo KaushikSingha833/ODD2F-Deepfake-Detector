@@ -246,7 +246,7 @@ if __name__ == "__main__":
     parser.add_argument('--batch_size', type=int, default=32, help="Batch size")
     parser.add_argument('--epochs', type=int, default=50, help="Number of training epochs")
     parser.add_argument('--lr', type=float, default=1e-3, help="Learning rate")
-    parser.add_argument('--weight_decay', type=float, default=1e-5, help="Weight decay for Adam")
+    parser.add_argument('--weight_decay', type=float, default=1e-3, help="Weight decay for Adam (increased to stop overfitting)")
     parser.add_argument('--patience', type=int, default=10, help="Patience for early stopping")
     
     args = parser.parse_args()

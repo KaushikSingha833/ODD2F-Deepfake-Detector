@@ -44,8 +44,20 @@ class DeepfakeDataset(Dataset):
             print(f"Error loading {img_path}: {e}")
             rgb_img = Image.new('RGB', (224, 224))
             
-        ela_img = compute_ela(rgb_img, quality=95)
+        import random
+        from io import BytesIO
         
+        # Apply Random JPEG Compression to the original image during training
+        # This mimics the "in-the-wild" browser compression!
+        if self.transform_rgb:
+            quality = random.randint(60, 100)
+            buffer = BytesIO()
+            rgb_img.save(buffer, format='JPEG', quality=quality)
+            buffer.seek(0)
+            rgb_img = Image.open(buffer).convert('RGB')
+            ela_img = compute_ela(rgb_img, quality=95)
+        else:
+            ela_img = compute_ela(rgb_img, quality=95)
         if self.transform_rgb:
             rgb_tensor = self.transform_rgb(rgb_img)
         else:

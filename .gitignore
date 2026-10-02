@@ -14,6 +14,14 @@ archive (1)/
 mini_dataset/
 dummy_dataset/
 *.csv
+large_dataset/
+mixed_dataset/
+super_dataset_12k/
+Final Dataset/
+userNot/
+Dataset/
+cifake_master_dataset/
+perfect_dataset/
 
 # Model Weights (GitHub has a 100MB file limit)
 checkpoints/
@@ -27,8 +35,6 @@ ui/control.json
 .vscode/
 .idea/
 .DS_Store
-large_dataset/
-mixed_dataset/
 *.jpg
 *.jpeg
 *.png
